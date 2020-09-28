@@ -17,4 +17,22 @@
 - takes a string and deterministically return a number indicating the index
 
 - Collision
+
   - when hashing returns the same number for different strings
+
+- Table for hashing numbers
+
+  - need to turn the value received from the hashing function into an index within the table
+  - value modulo of the length of the table
+    - ex. table length 8
+      - hashIndex = value % 8
+  - hash function doesn't care about the indexing
+    - only cares about returning a number for a string
+
+- Put
+  - storing in the hash table
+- Get
+
+  - getting something from a hash table
+
+- No matter how big the table is the put, get functions are all constant time
