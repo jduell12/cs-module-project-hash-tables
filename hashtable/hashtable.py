@@ -22,6 +22,7 @@ class HashTable:
 
     def __init__(self, capacity):
         self.capacity = capacity
+        self.storage = [None] * capacity
 
 
     def get_num_slots(self):
@@ -96,8 +97,8 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        return self.fnv1(key) % self.capacity
+        # return self.djb2(key) % self.capacity
 
     def put(self, key, value):
         """
@@ -107,7 +108,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        index = self.hash_index(key)
+        self.storage[index] = HashTableEntry(key, value)
 
 
     def delete(self, key):
@@ -129,7 +131,13 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        index = self.hash_index(key)
+        hash_entry = self.storage[index]
+        if hash_entry:
+            return hash_entry.value
+        else:
+            return None
+        
 
 
     def resize(self, new_capacity):
@@ -144,36 +152,73 @@ class HashTable:
 
 
 if __name__ == "__main__":
-    ht = HashTable(8)
+    ht = HashTable(0x10000)
+    
+    # ht.put("line_1", "'Twas brillig, and the slithy toves")
+    # ht.put("line_2", "Did gyre and gimble in the wabe:")
+    # ht.put("line_3", "All mimsy were the borogoves,")
+    # ht.put("line_4", "And the mome raths outgrabe.")
+    # ht.put("line_5", '"Beware the Jabberwock, my son!')
+    # ht.put("line_6", "The jaws that bite, the claws that catch!")
+    # ht.put("line_7", "Beware the Jubjub bird, and shun")
+    # ht.put("line_8", 'The frumious Bandersnatch!"')
+    # ht.put("line_9", "He took his vorpal sword in hand;")
+    # ht.put("line_10", "Long time the manxome foe he sought--")
+    # ht.put("line_11", "So rested he by the Tumtum tree")
+    # ht.put("line_12", "And stood awhile in thought.")
 
-    ht.put("line_1", "'Twas brillig, and the slithy toves")
-    ht.put("line_2", "Did gyre and gimble in the wabe:")
-    ht.put("line_3", "All mimsy were the borogoves,")
-    ht.put("line_4", "And the mome raths outgrabe.")
-    ht.put("line_5", '"Beware the Jabberwock, my son!')
-    ht.put("line_6", "The jaws that bite, the claws that catch!")
-    ht.put("line_7", "Beware the Jubjub bird, and shun")
-    ht.put("line_8", 'The frumious Bandersnatch!"')
-    ht.put("line_9", "He took his vorpal sword in hand;")
-    ht.put("line_10", "Long time the manxome foe he sought--")
-    ht.put("line_11", "So rested he by the Tumtum tree")
-    ht.put("line_12", "And stood awhile in thought.")
+    # print("")
 
+    #Test storing beyond capacity
+    # for i in range(1, 13):
+    #     print(ht.get("line_%d" %i))
+    
+    ht.put("key-0", "val-0")
+    ht.put("key-1", "val-1")
+    ht.put("key-2", "val-2")
+    print("Test case 1 - no collisions --> insert and retrieve")
+    return_value = ht.get("key-0")
+    print(return_value == "val-0")
+    return_value = ht.get("key-1")
+    print(return_value == "val-1")
+    return_value = ht.get("key-2")
+    print(return_value == "val-2")
     print("")
-
-    # Test storing beyond capacity
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    
+    ht.put("key-0", "new-val-0")
+    ht.put("key-1", "new-val-1")
+    ht.put("key-2", "new-val-2")
+    
+    print("Test case 2 - no collisions --> overwriting")
+    return_value = ht.get("key-0")
+    print(return_value == "new-val-0")
+    return_value = ht.get("key-1")
+    print(return_value == "new-val-1")
+    return_value = ht.get("key-2")
+    print(return_value == "new-val-2")
+    print("")
+    
+    ht.delete("key-2")
+    ht.delete("key-1")
+    ht.delete("key-0")
+    
+    print("Test case 3 - no collisions --> removes correctly")
+    return_value = ht.get("key-0")
+    print(return_value is None)
+    return_value = ht.get("key-1")
+    print(return_value is None)
+    return_value = ht.get("key-2")
+    print(return_value is None)
 
     # Test resizing
-    old_capacity = ht.get_num_slots()
-    ht.resize(ht.capacity * 2)
-    new_capacity = ht.get_num_slots()
+    # old_capacity = ht.get_num_slots()
+    # ht.resize(ht.capacity * 2)
+    # new_capacity = ht.get_num_slots()
 
-    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
     # Test if data intact after resizing
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
 
     print("")
