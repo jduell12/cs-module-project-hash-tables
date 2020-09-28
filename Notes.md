@@ -36,3 +36,6 @@
   - getting something from a hash table
 
 - No matter how big the table is the put, get functions are all constant time
+
+- XOR (inclusive or)
+  ^ in python
