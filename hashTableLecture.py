@@ -8,7 +8,7 @@ class HashEntry:
         self.value = value
         
     def __repr__(self):
-        return f"HashEntry({self.key}, {self.value}"
+        return f"HashEntry({self.key}, {self.value})"
 
 #Naive hashing function - shouldn't be used
 def hashf(s):
@@ -35,7 +35,7 @@ def get(key):
     index = get_index(key)
     hash_entry = table[index]
     if hash_entry:
-        return hash_entry
+        return hash_entry.value
     else:
         return f'{key} is not in the table'
 
@@ -44,6 +44,6 @@ put("Beej", 3490)
 put("Goats!", 9999)
 # print(table)
 
-print(get("Beej"))
-print(get("Goats!"))
-print(get("Jess"))
+print(get("Beej")) #3490
+print(get("Goats!")) #9999
+print(get("Jess")) #Not in table
