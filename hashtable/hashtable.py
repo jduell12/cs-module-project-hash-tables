@@ -53,8 +53,6 @@ class HashTable:
 
         Implement this, and/or DJB2.
         """
-        keyInBytes = str(key).encode()
-        
         #found in wikipedia article
         FNV_prime = 1099511628211
         #found in wikipedia article
@@ -64,7 +62,7 @@ class HashTable:
         hash = offset 
         
         #for each byte of data 
-        for c in keyInBytes:
+        for c in key:
             #hash * fnv prime 
             hash = hash * FNV_prime
             #hash XOR byte of data 
@@ -80,13 +78,11 @@ class HashTable:
 
         Uses bit manipulation and prime numbers to create hash
         """
-        #encode string so can use unicode characters as key
-        keyInBytes = str(key).encode()
         
         #prime number
         hash = 5381
         
-        for c in keyInBytes:
+        for c in key:
             #get 32-bit hash
             hash = (hash * 33) + ord(c)
         return hash
@@ -120,7 +116,12 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        index = self.hash_index(key)
+        
+        if self.storage[index]:
+            self.storage[index] = None
+        else:
+            print(f'{key} is not in the hash table')
 
 
     def get(self, key):
@@ -154,61 +155,61 @@ class HashTable:
 if __name__ == "__main__":
     ht = HashTable(0x10000)
     
-    # ht.put("line_1", "'Twas brillig, and the slithy toves")
-    # ht.put("line_2", "Did gyre and gimble in the wabe:")
-    # ht.put("line_3", "All mimsy were the borogoves,")
-    # ht.put("line_4", "And the mome raths outgrabe.")
-    # ht.put("line_5", '"Beware the Jabberwock, my son!')
-    # ht.put("line_6", "The jaws that bite, the claws that catch!")
-    # ht.put("line_7", "Beware the Jubjub bird, and shun")
-    # ht.put("line_8", 'The frumious Bandersnatch!"')
-    # ht.put("line_9", "He took his vorpal sword in hand;")
-    # ht.put("line_10", "Long time the manxome foe he sought--")
-    # ht.put("line_11", "So rested he by the Tumtum tree")
-    # ht.put("line_12", "And stood awhile in thought.")
+    ht.put("line_1", "'Twas brillig, and the slithy toves")
+    ht.put("line_2", "Did gyre and gimble in the wabe:")
+    ht.put("line_3", "All mimsy were the borogoves,")
+    ht.put("line_4", "And the mome raths outgrabe.")
+    ht.put("line_5", '"Beware the Jabberwock, my son!')
+    ht.put("line_6", "The jaws that bite, the claws that catch!")
+    ht.put("line_7", "Beware the Jubjub bird, and shun")
+    ht.put("line_8", 'The frumious Bandersnatch!"')
+    ht.put("line_9", "He took his vorpal sword in hand;")
+    ht.put("line_10", "Long time the manxome foe he sought--")
+    ht.put("line_11", "So rested he by the Tumtum tree")
+    ht.put("line_12", "And stood awhile in thought.")
 
+    print("")
+
+    # #Test storing beyond capacity
+    for i in range(1, 13):
+        print(ht.get("line_%d" %i))
+    
+    # ht.put("key-0", "val-0")
+    # ht.put("key-1", "val-1")
+    # ht.put("key-2", "val-2")
+    # print("Test case 1 - no collisions --> insert and retrieve")
+    # return_value = ht.get("key-0")
+    # print(return_value == "val-0")
+    # return_value = ht.get("key-1")
+    # print(return_value == "val-1")
+    # return_value = ht.get("key-2")
+    # print(return_value == "val-2")
     # print("")
-
-    #Test storing beyond capacity
-    # for i in range(1, 13):
-    #     print(ht.get("line_%d" %i))
     
-    ht.put("key-0", "val-0")
-    ht.put("key-1", "val-1")
-    ht.put("key-2", "val-2")
-    print("Test case 1 - no collisions --> insert and retrieve")
-    return_value = ht.get("key-0")
-    print(return_value == "val-0")
-    return_value = ht.get("key-1")
-    print(return_value == "val-1")
-    return_value = ht.get("key-2")
-    print(return_value == "val-2")
-    print("")
+    # ht.put("key-0", "new-val-0")
+    # ht.put("key-1", "new-val-1")
+    # ht.put("key-2", "new-val-2")
     
-    ht.put("key-0", "new-val-0")
-    ht.put("key-1", "new-val-1")
-    ht.put("key-2", "new-val-2")
+    # print("Test case 2 - no collisions --> overwriting")
+    # return_value = ht.get("key-0")
+    # print(return_value == "new-val-0")
+    # return_value = ht.get("key-1")
+    # print(return_value == "new-val-1")
+    # return_value = ht.get("key-2")
+    # print(return_value == "new-val-2")
+    # print("")
     
-    print("Test case 2 - no collisions --> overwriting")
-    return_value = ht.get("key-0")
-    print(return_value == "new-val-0")
-    return_value = ht.get("key-1")
-    print(return_value == "new-val-1")
-    return_value = ht.get("key-2")
-    print(return_value == "new-val-2")
-    print("")
+    # ht.delete("key-2")
+    # ht.delete("key-1")
+    # ht.delete("key-0")
     
-    ht.delete("key-2")
-    ht.delete("key-1")
-    ht.delete("key-0")
-    
-    print("Test case 3 - no collisions --> removes correctly")
-    return_value = ht.get("key-0")
-    print(return_value is None)
-    return_value = ht.get("key-1")
-    print(return_value is None)
-    return_value = ht.get("key-2")
-    print(return_value is None)
+    # print("Test case 3 - no collisions --> removes correctly")
+    # return_value = ht.get("key-0")
+    # print(return_value is None)
+    # return_value = ht.get("key-1")
+    # print(return_value is None)
+    # return_value = ht.get("key-2")
+    # print(return_value is None)
 
     # Test resizing
     # old_capacity = ht.get_num_slots()
