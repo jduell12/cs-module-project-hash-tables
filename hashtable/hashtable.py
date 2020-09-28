@@ -21,8 +21,7 @@ class HashTable:
     """
 
     def __init__(self, capacity):
-        # Your code here
-        pass
+        self.capacity = capacity
 
 
     def get_num_slots(self):
@@ -53,17 +52,43 @@ class HashTable:
 
         Implement this, and/or DJB2.
         """
-
-        # Your code here
+        keyInBytes = str(key).encode()
+        
+        #found in wikipedia article
+        FNV_prime = 1099511628211
+        #found in wikipedia article
+        offset = 14695981039346656037
+        
+        # hash = fnv offset basis 
+        hash = offset 
+        
+        #for each byte of data 
+        for c in keyInBytes:
+            #hash * fnv prime 
+            hash = hash * FNV_prime
+            #hash XOR byte of data 
+            hash = hash ^ ord(c)
+            
+        return hash
+        
 
 
     def djb2(self, key):
         """
         DJB2 hash, 32-bit
 
-        Implement this, and/or FNV-1.
+        Uses bit manipulation and prime numbers to create hash
         """
-        # Your code here
+        #encode string so can use unicode characters as key
+        keyInBytes = str(key).encode()
+        
+        #prime number
+        hash = 5381
+        
+        for c in keyInBytes:
+            #get 32-bit hash
+            hash = (hash * 33) + ord(c)
+        return hash
 
 
     def hash_index(self, key):
