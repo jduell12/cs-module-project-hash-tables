@@ -15,3 +15,6 @@
   "ipsum" -> f() -> 1
 
 - takes a string and deterministically return a number indicating the index
+
+- Collision
+  - when hashing returns the same number for different strings
