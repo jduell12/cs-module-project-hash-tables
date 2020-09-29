@@ -28,12 +28,12 @@
         put("plugh", 20) #hashes to 1 -- collision
         put("xyzzy", 50) #hases to 2 -- collision
 
-        | Slot Index | Chain (linked list) |
-        | ---------- | ------------------- |
-        | 0 | --> HashEntry("qux", 10) --> None |
-        | 1 |--> HashEntry("plugh", 20) --> HashEntry("foo", 1) --> None |
-        | 2 | --> HashEntry("xyzzy", 50) --> HashEntry("baz", 99) --> HashEntry("bar", 30) --> None |
-        | 3 | --> None |
+         Slot Index | Chain (linked list)
+         ---------- | -------------------
+         0 | --> HashEntry("qux", 10) --> None
+         1 |--> HashEntry("plugh", 20) --> HashEntry("foo", 1) --> None |
+         2 | --> HashEntry("xyzzy", 50) --> HashEntry("baz", 99) --> HashEntry("bar", 30) --> None
+         3 | --> None
 
         - put in next slot that's available in a predictable manner
           - aka open addressing
