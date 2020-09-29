@@ -17,10 +17,10 @@ class LinkedList:
         self.head = node 
         self.count += 1
         
-    def find(self, value):
+    def find(self, key):
         cur = self.head
         #traverses linked list 
-        while cur is not None and cur.value != value:
+        while cur is not None and cur.key != key:
             cur = cur.next
         #checks if node is None or has a value
         if cur:
@@ -214,11 +214,14 @@ class HashTable:
         Implement this.
         """
         index = self.hash_index(key)
-        hash_entry = self.storage[index]
-        if hash_entry:
-            return hash_entry.value
-        else:
-            return None
+        #search linked list at that key for the value
+        if self.storage[index]:
+            #if found return the value
+            if self.storage[index].find(key):
+                return self.storage[index].find(key).value
+            
+        return None
+        
         
 
 
@@ -253,11 +256,11 @@ if __name__ == "__main__":
 
     print("")
     
-    print(ht)
+    # print(ht)
 
     # # #Test storing beyond capacity
-    # for i in range(1, 13):
-    #     print(ht.get("line_%d" %i))
+    for i in range(1, 13):
+        print(ht.get("line_%d" %i))
     
     # ht.put("key-0", "val-0")
     # ht.put("key-1", "val-1")
