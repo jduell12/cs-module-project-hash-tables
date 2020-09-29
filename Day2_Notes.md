@@ -38,3 +38,28 @@ table = [None, None, None, None]
           - aka open addressing
           - performance isn't optimal
           - good for limited memory
+
+- Get with linked list
+  ```
+    Get(key):
+      get index for the key
+      search linked list at that index for the key
+      if found, return value
+      else return None
+  ```
+- Put with linked list
+  ```
+    Put(key):
+      get the index for the key
+      search linked list at that index for the key
+      if found, overwrite the value
+      else insert the key and value at the head of the lsit at that index
+  ```
+- Delete with linked list
+  ```
+      Delete(key):
+          get the index for the key
+          search the linked list at that index for the key
+          if found, delete it and return it
+          else return 'not found' or none
+  ```
