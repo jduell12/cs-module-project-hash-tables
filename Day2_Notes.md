@@ -31,11 +31,6 @@ table = [None, None, None, None]
 | 2          | --> HashEntry("xyzzy", 50) --> HashEntry("baz", 99) --> HashEntry("bar", 30) --> None |
 | 3          | --> None                                                                              |
 
-        - put in next slot that's available in a predictable manner
-          - aka open addressing
-          - performance isn't optimal
-          - good for limited memory
-
 - Get with linked list
   ```
     Get(key):
@@ -53,6 +48,7 @@ table = [None, None, None, None]
       else insert the key and value at the head of the lsit at that index
   ```
 - Delete with linked list
+
   ```
       Delete(key):
           get the index for the key
@@ -60,3 +56,10 @@ table = [None, None, None, None]
           if found, delete it and return it
           else return 'not found' or none
   ```
+
+                                                                         |
+
+- put in next slot that's available in a predictable manner
+  - aka open addressing
+  - performance isn't optimal
+  - good for limited memory
