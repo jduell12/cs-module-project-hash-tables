@@ -6,6 +6,10 @@ class HashTableEntry:
         self.key = key
         self.value = value
         self.next = None
+    
+    def __str__(self):
+        return f"HashTableEntry({self.key}, {self.value})"
+        
         
 class LinkedList:
     def __init__(self):
@@ -28,22 +32,22 @@ class LinkedList:
         else:
             return None
         
-    def delete(self, value):
+    def delete(self, key):
         #empty list case
         if self.head is None:
             return None
         
         #deleting head of list
-        if self.head.value == value:
+        if self.head.key == key:
             old_head = self.head
             self.head = old_head.next
             old_head.next = None
             self.count -= 1
-            return old_head.value
+            return old_head
         
         cur = self.head
         
-        while cur is not None and cur.value != value:
+        while cur is not None and cur.key != key:
             prev = cur 
             cur = cur.next 
             
@@ -51,7 +55,7 @@ class LinkedList:
             prev.next = cur.next
             cur.next = None
             self.count -= 1
-            return cur.value
+            return cur
         else:
             return None
         
@@ -197,12 +201,19 @@ class HashTable:
         index = self.hash_index(key)
         
         if self.storage[index]:
+            #if found return the value
             if self.storage[index].find(key):
-                pass
-            else:
-                pass
-        else:
-            print(f'{key} is not in the hash table')
+                return self.storage[index].delete(key)
+            
+        return None
+        
+        # if self.storage[index]:
+        #     if self.storage[index].find(key):
+        #         pass
+        #     else:
+        #         pass
+        # else:
+        #     print(f'{key} is not in the hash table')
 
 
     def get(self, key):
@@ -256,48 +267,17 @@ if __name__ == "__main__":
 
     print("")
     
-    # print(ht)
+    print(ht)
 
     # # #Test storing beyond capacity
-    for i in range(1, 13):
-        print(ht.get("line_%d" %i))
+    # for i in range(1, 13):
+    #     print(f'{i} ', ht.get("line_%d" %i))
+        
+
+    ht.delete("line_12")
+    print("")
+    print(ht)
     
-    # ht.put("key-0", "val-0")
-    # ht.put("key-1", "val-1")
-    # ht.put("key-2", "val-2")
-    # print("Test case 1 - no collisions --> insert and retrieve")
-    # return_value = ht.get("key-0")
-    # print(return_value == "val-0")
-    # return_value = ht.get("key-1")
-    # print(return_value == "val-1")
-    # return_value = ht.get("key-2")
-    # print(return_value == "val-2")
-    # print("")
-    
-    # ht.put("key-0", "new-val-0")
-    # ht.put("key-1", "new-val-1")
-    # ht.put("key-2", "new-val-2")
-    
-    # print("Test case 2 - no collisions --> overwriting")
-    # return_value = ht.get("key-0")
-    # print(return_value == "new-val-0")
-    # return_value = ht.get("key-1")
-    # print(return_value == "new-val-1")
-    # return_value = ht.get("key-2")
-    # print(return_value == "new-val-2")
-    # print("")
-    
-    # ht.delete("key-2")
-    # ht.delete("key-1")
-    # ht.delete("key-0")
-    
-    # print("Test case 3 - no collisions --> removes correctly")
-    # return_value = ht.get("key-0")
-    # print(return_value is None)
-    # return_value = ht.get("key-1")
-    # print(return_value is None)
-    # return_value = ht.get("key-2")
-    # print(return_value is None)
 
     # Test resizing
     # old_capacity = ht.get_num_slots()
