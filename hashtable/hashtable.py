@@ -188,6 +188,10 @@ class HashTable:
             headNode = HashTableEntry(key, value)
             self.storage[index] = LinkedList()
             self.storage[index].insert_at_head(headNode)
+            
+        #Day 1
+        # index = self.hash_index(key)
+        # self.storage[index] = HashTableEntry(key, value)
 
 
     def delete(self, key):
@@ -207,6 +211,7 @@ class HashTable:
             
         return None
         
+        #Day 1
         # if self.storage[index]:
         #     if self.storage[index].find(key):
         #         pass
@@ -232,6 +237,14 @@ class HashTable:
                 return self.storage[index].find(key).value
             
         return None
+    
+        #Day 1
+        # index = self.hash_index(key)
+        # hash_entry = self.storage[index]
+        # if hash_entry:
+        #     return hash_entry.value
+        # else:
+        #     return None
         
         
 
