@@ -57,8 +57,6 @@ table = [None, None, None, None]
           else return 'not found' or none
   ```
 
-                                                                         |
-
 - put in next slot that's available in a predictable manner
   - aka open addressing
   - performance isn't optimal
