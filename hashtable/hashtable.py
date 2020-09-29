@@ -6,6 +6,67 @@ class HashTableEntry:
         self.key = key
         self.value = value
         self.next = None
+        
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.count = 0
+        
+    def insert_at_head(self, node):
+        node.next = self.head
+        self.head = node 
+        self.count += 1
+        
+    def find(self, value):
+        cur = self.head
+        #traverses linked list 
+        while cur is not None and cur.value != value:
+            cur = cur.next
+        #checks if node is None or has a value
+        if cur:
+            return "Node(%d)" %cur.value
+        else:
+            return None
+        
+    def delete(self, value):
+        #empty list case
+        if self.head is None:
+            return None
+        
+        #deleting head of list
+        if self.head.value == value:
+            old_head = self.head
+            self.head = old_head.next
+            old_head.next = None
+            self.count -= 1
+            return old_head.value
+        
+        cur = self.head
+        
+        while cur is not None and cur.value != value:
+            prev = cur 
+            cur = cur.next 
+            
+        if cur:
+            prev.next = cur.next
+            cur.next = None
+            self.count -= 1
+            return cur.value
+        else:
+            return None
+        
+    def __str__(self):
+        r = f"count: {self.count}\n"
+        if self.head is None:
+            r += "None\n"
+        #traverse the list
+        cur = self.head
+        while cur is not None:
+            r += " %d " % cur.value
+            if cur.next is not None:
+                r += '-->'
+            cur = cur.next
+        return r
 
 
 # Hash table can't have fewer than this many slots
@@ -22,8 +83,13 @@ class HashTable:
 
     def __init__(self, capacity):
         self.capacity = capacity
-        self.storage = [None] * capacity
+        self.storage = [LinkedList()] * capacity
 
+    def __str__(self):
+        r = ""
+        for i in range(len(self.storage)):
+            r += f"{self.storage[i]}\n"
+        return r
 
     def get_num_slots(self):
         """
@@ -105,6 +171,8 @@ class HashTable:
         Implement this.
         """
         index = self.hash_index(key)
+        if self.storage[index]:
+            pass
         self.storage[index] = HashTableEntry(key, value)
 
 
@@ -153,26 +221,30 @@ class HashTable:
 
 
 if __name__ == "__main__":
-    ht = HashTable(0x10000)
+    ht = HashTable(8)
     
-    ht.put("line_1", "'Twas brillig, and the slithy toves")
-    ht.put("line_2", "Did gyre and gimble in the wabe:")
-    ht.put("line_3", "All mimsy were the borogoves,")
-    ht.put("line_4", "And the mome raths outgrabe.")
-    ht.put("line_5", '"Beware the Jabberwock, my son!')
-    ht.put("line_6", "The jaws that bite, the claws that catch!")
-    ht.put("line_7", "Beware the Jubjub bird, and shun")
-    ht.put("line_8", 'The frumious Bandersnatch!"')
-    ht.put("line_9", "He took his vorpal sword in hand;")
-    ht.put("line_10", "Long time the manxome foe he sought--")
-    ht.put("line_11", "So rested he by the Tumtum tree")
-    ht.put("line_12", "And stood awhile in thought.")
+    print(ht)
+    
+    # ht.put("line_1", "'Twas brillig, and the slithy toves")
+    # ht.put("line_2", "Did gyre and gimble in the wabe:")
+    # ht.put("line_3", "All mimsy were the borogoves,")
+    # ht.put("line_4", "And the mome raths outgrabe.")
+    # ht.put("line_5", '"Beware the Jabberwock, my son!')
+    # ht.put("line_6", "The jaws that bite, the claws that catch!")
+    # ht.put("line_7", "Beware the Jubjub bird, and shun")
+    # ht.put("line_8", 'The frumious Bandersnatch!"')
+    # ht.put("line_9", "He took his vorpal sword in hand;")
+    # ht.put("line_10", "Long time the manxome foe he sought--")
+    # ht.put("line_11", "So rested he by the Tumtum tree")
+    # ht.put("line_12", "And stood awhile in thought.")
 
-    print("")
+    # print("")
+    
+    # print(ht)
 
-    # #Test storing beyond capacity
-    for i in range(1, 13):
-        print(ht.get("line_%d" %i))
+    # # #Test storing beyond capacity
+    # for i in range(1, 13):
+    #     print(ht.get("line_%d" %i))
     
     # ht.put("key-0", "val-0")
     # ht.put("key-1", "val-1")
