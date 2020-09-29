@@ -63,6 +63,25 @@ put("xyzzy", 50) #hases to 2 -- collision
   ```
 
 - put in next slot that's available in a predictable manner
+
   - aka open addressing
   - performance isn't optimal
   - good for limited memory
+
+- Load factor
+
+  - number of elements in hash table / number of slots in the array
+  - if load factor > 0.7
+    - rehash, doubling the size of the hash table
+  - if load factor < 0.2 and the table size > some minimum
+    - rehash, halving the size of the table
+
+- Rehash algorithm
+
+```
+ Rehash:
+    Make new array 2x the size of the old one
+    for index in range(len(array)):
+        for each entry in the list at that index:
+            add it to the new array
+```
