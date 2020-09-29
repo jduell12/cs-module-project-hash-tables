@@ -24,7 +24,7 @@ class LinkedList:
             cur = cur.next
         #checks if node is None or has a value
         if cur:
-            return "Node(%d)" %cur.value
+            return cur
         else:
             return None
         
@@ -62,7 +62,7 @@ class LinkedList:
         #traverse the list
         cur = self.head
         while cur is not None:
-            r += " %d " % cur.value
+            r += f"HashEntry({cur.key}, {cur.value})\n"
             if cur.next is not None:
                 r += '-->'
             cur = cur.next
@@ -83,12 +83,12 @@ class HashTable:
 
     def __init__(self, capacity):
         self.capacity = capacity
-        self.storage = [LinkedList()] * capacity
+        self.storage = [None] * capacity
 
     def __str__(self):
         r = ""
         for i in range(len(self.storage)):
-            r += f"{self.storage[i]}\n"
+            r += f"{i}: {self.storage[i]}\n"
         return r
 
     def get_num_slots(self):
@@ -170,10 +170,20 @@ class HashTable:
 
         Implement this.
         """
+        #get index for the key
         index = self.hash_index(key)
+               
         if self.storage[index]:
-            pass
-        self.storage[index] = HashTableEntry(key, value)
+            if self.storage[index].find(value):
+                node = self.storage[index].find(key)
+                node.value = value
+            else:
+                headNode = HashTableEntry(key, value)
+                self.storage[index].insert_at_head(headNode)
+        else:
+            headNode = HashTableEntry(key, value)
+            self.storage[index] = LinkedList()
+            self.storage[index].insert_at_head(headNode)
 
 
     def delete(self, key):
@@ -187,7 +197,10 @@ class HashTable:
         index = self.hash_index(key)
         
         if self.storage[index]:
-            self.storage[index] = None
+            if self.storage[index].find(key):
+                pass
+            else:
+                pass
         else:
             print(f'{key} is not in the hash table')
 
@@ -223,24 +236,24 @@ class HashTable:
 if __name__ == "__main__":
     ht = HashTable(8)
     
-    print(ht)
-    
-    # ht.put("line_1", "'Twas brillig, and the slithy toves")
-    # ht.put("line_2", "Did gyre and gimble in the wabe:")
-    # ht.put("line_3", "All mimsy were the borogoves,")
-    # ht.put("line_4", "And the mome raths outgrabe.")
-    # ht.put("line_5", '"Beware the Jabberwock, my son!')
-    # ht.put("line_6", "The jaws that bite, the claws that catch!")
-    # ht.put("line_7", "Beware the Jubjub bird, and shun")
-    # ht.put("line_8", 'The frumious Bandersnatch!"')
-    # ht.put("line_9", "He took his vorpal sword in hand;")
-    # ht.put("line_10", "Long time the manxome foe he sought--")
-    # ht.put("line_11", "So rested he by the Tumtum tree")
-    # ht.put("line_12", "And stood awhile in thought.")
-
-    # print("")
-    
     # print(ht)
+    
+    ht.put("line_1", "'Twas brillig, and the slithy toves")
+    ht.put("line_2", "Did gyre and gimble in the wabe:")
+    ht.put("line_3", "All mimsy were the borogoves,")
+    ht.put("line_4", "And the mome raths outgrabe.")
+    ht.put("line_5", '"Beware the Jabberwock, my son!')
+    ht.put("line_6", "The jaws that bite, the claws that catch!")
+    ht.put("line_7", "Beware the Jubjub bird, and shun")
+    ht.put("line_8", 'The frumious Bandersnatch!"')
+    ht.put("line_9", "He took his vorpal sword in hand;")
+    ht.put("line_10", "Long time the manxome foe he sought--")
+    ht.put("line_11", "So rested he by the Tumtum tree")
+    ht.put("line_12", "And stood awhile in thought.")
+
+    print("")
+    
+    print(ht)
 
     # # #Test storing beyond capacity
     # for i in range(1, 13):
