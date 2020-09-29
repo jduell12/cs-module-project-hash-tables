@@ -1,49 +1,41 @@
-#list to hold hashing stringbased on the has number
-#length of list is a power of 2 
-table = [None] * 8
-
-class HashEntry:
-    def __init__(self, key, value):
-        self.key = key
+#linked list for Hash tables
+class Node:
+    def __init__(self, value):
         self.value = value
+        self.next = None
         
-    def __repr__(self):
-        return f"HashEntry({self.key}, {self.value})"
-
-#Naive hashing function - shouldn't be used
-def hashf(s):
-    total = 0;
-    #encode string into bytes to be able to use unicode characters
-    bytes = str(s).encode()
-    #O(n) over length of the key/string s
-    for b in bytes: 
-        #add the byte to total
-        total += b
-    return total 
-
-def get_index(s):
-    value = hashf(s);
-    return value % len(table)
-
-def put(key, value): 
-    #O(n) over the length of the key
-    #O(1) over the number of items in the table 
-    index = get_index(key)
-    table[index] = HashEntry(key, value)
-
-def get(key):
-    index = get_index(key)
-    hash_entry = table[index]
-    if hash_entry:
-        return hash_entry.value
-    else:
-        return f'{key} is not in the table'
-
-put("Beej", 3490)
-# print(table)
-put("Goats!", 9999)
-# print(table)
-
-print(get("Beej")) #3490
-print(get("Goats!")) #9999
-print(get("Jess")) #Not in table
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        
+    def insert_at_head(self, node):
+        node.next = self.head
+        self.head = node 
+        
+    def find(self, value):
+        cur = self.head
+        while cur is not None and cur.value != value:
+            cur = cur.next
+        if cur:
+            return "Node(%d)" %cur.value
+        else:
+            return None
+        
+    def __str__(self):
+        r = ""
+        #traverse the list
+        cur = self.head
+        while cur is not None:
+            r += " %d " % cur.value
+            if cur.next is not None:
+                r += '-->'
+            cur = cur.next
+        return r
+        
+ll = LinkedList()
+ll.insert_at_head(Node(10))
+ll.insert_at_head(Node(40))
+ll.insert_at_head(Node(20))
+print(ll)
+print(ll.find(10))
+print(ll.find(100))
