@@ -4,12 +4,10 @@
 
   - different strings hash to the same number
   - handling collisions
+  - disallow it
+  - check if a number is already used and if it is return "No" - store in a linked list
 
-        - disallow it
-          - check if a number is already used and if it is return "No"
-        - store in a linked list
-
-          - aka chaining
+         - aka chaining
 
 table = [None, None, None, None]
 
