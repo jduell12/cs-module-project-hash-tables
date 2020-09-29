@@ -20,12 +20,12 @@ table = [None, None, None, None]
 | 2          | --> None            |
 | 3          | --> None            |
 
-put("foo", 12) #hashes to 1
-put("bar", 30) #hashes to 2
-put("baz", 99) #hashes to 2 -- collision with "bar"
-put("qux", 10) #hashes to 0
-put("plugh", 20) #hashes to 1 -- collision
-put("xyzzy", 50) #hases to 2 -- collision
+- put("foo", 12) #hashes to 1
+- put("bar", 30) #hashes to 2
+- put("baz", 99) #hashes to 2 -- collision with "bar"
+- put("qux", 10) #hashes to 0
+- put("plugh", 20) #hashes to 1 -- collision
+- put("xyzzy", 50) #hases to 2 -- collision
 
 | Slot Index | Chain (linked list)                                                                   |
 | ---------- | ------------------------------------------------------------------------------------- |
