@@ -29,6 +29,7 @@ def fib(n):
 # for i in range(100):
 #     print(f"{i:3} {fib(i)}")
 
+#########################################################################
 #sort a dictionary that's out of order
 d = {
     "foo": 12,
@@ -41,16 +42,80 @@ dList = list(d.items())
 #sorts by keys 
 dList.sort()
 
-for i in dList:
-    print(f"{i[0]}: {i[1]}")
+# for i in dList:
+#     print(f"{i[0]}: {i[1]}")
     
-#sort by value 
-def sort_by(t):
-    return t[1]
 
-print("----------------")
+# print("----------------")
 #key parameter and give a function to sort by 
 # default is sorting 0
-dList.sort(key=sort_by)
-for i in dList:
-    print(f"{i[0]}: {i[1]}")
+
+#sort by value using named function
+# def sort_by(t):
+#     return t[1]
+
+# dList.sort(key=sort_by)
+
+#annonymous function in python 
+dList.sort(key=lambda t:t[1])
+# for i in dList:
+#     print(f"{i[0]}: {i[1]}")
+
+#########################################################################
+#encryption
+
+#Plaintext: HELLOWORLD
+#Ciphertext: DOGGEBEUGW --> using encode table 
+
+encode_table = {
+    'A': 'H',
+    'B': 'Z',
+    'C': 'Y',
+    'D': 'W',
+    'E': 'O',
+    'F': 'R',
+    'G': 'J',
+    'H': 'D',
+    'I': 'P',
+    'J': 'T',
+    'K': 'I',
+    'L': 'G',
+    'M': 'L',
+    'N': 'C',
+    'O': 'E',
+    'P': 'X',
+    'Q': 'K',
+    'R': 'U',
+    'S': 'N',
+    'T': 'F',
+    'U': 'A',
+    'V': 'M',
+    'W': 'B',
+    'X': 'Q',
+    'Y': 'V',
+    'Z': 'S'
+}
+
+def encode(s):
+    r = ""
+    for c in s:
+        r += encode_table[c]
+    return r
+
+decode_table = {}
+
+#order n 
+for k, v in encode_table.items():
+    decode_table[v] = k
+
+def decode(s):
+    r = ""
+    for c in s:
+        r += decode_table[c]
+    return r
+
+print("")
+print(encode('HELLOWORLD')) #should be DOGGEBEUGW
+print("")
+print(decode('DOGGEBEUGW')) #should be HELLOWORLD
+print("")
