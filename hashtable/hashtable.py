@@ -202,8 +202,8 @@ class HashTable:
                 #check node factor
                 # load_factor = self.get_load_factor()
                 # if load_factor > 0.7:
-                    #double table size
-                    # self.resize((self.capacity * 2))
+                #     # double table size
+                #     self.resize((self.capacity * 2))
         else:
             headNode = HashTableEntry(key, value)
             self.storage[index] = LinkedList()
