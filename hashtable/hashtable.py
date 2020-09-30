@@ -59,6 +59,7 @@ class LinkedList:
         else:
             return None
         
+        
     def __str__(self):
         r = f"count: {self.count}\n"
         if self.head is None:
@@ -71,6 +72,17 @@ class LinkedList:
                 r += '-->'
             cur = cur.next
         return r
+    
+    def iterate(self):
+        nodes = []
+        if self.head is None:
+            return None
+        #traverse the list
+        cur = self.head
+        while cur is not None:
+            nodes.append(cur)
+            cur = cur.next
+        return nodes
 
 
 # Hash table can't have fewer than this many slots
@@ -88,6 +100,7 @@ class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
+        self.items = 0
 
     def __str__(self):
         r = ""
@@ -105,7 +118,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return self.capacity
 
 
     def get_load_factor(self):
@@ -114,7 +127,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return self.items / self.capacity
+    
 
 
     def fnv1(self, key):
@@ -184,10 +198,17 @@ class HashTable:
             else:
                 headNode = HashTableEntry(key, value)
                 self.storage[index].insert_at_head(headNode)
+                self.items += 1
+                #check node factor
+                # load_factor = self.get_load_factor()
+                # if load_factor > 0.7:
+                    #double table size
+                    # self.resize((self.capacity * 2))
         else:
             headNode = HashTableEntry(key, value)
             self.storage[index] = LinkedList()
             self.storage[index].insert_at_head(headNode)
+            self.items += 1
             
         #Day 1
         # index = self.hash_index(key)
@@ -207,16 +228,16 @@ class HashTable:
         if self.storage[index]:
             #if found return the value
             if self.storage[index].find(key):
+                self.items -= 1
                 return self.storage[index].delete(key)
             
         return None
         
         #Day 1
+        # index = self.hash_index(key)
+        
         # if self.storage[index]:
-        #     if self.storage[index].find(key):
-        #         pass
-        #     else:
-        #         pass
+        #     self.storage[index] = None
         # else:
         #     print(f'{key} is not in the hash table')
 
@@ -256,14 +277,31 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        #creates new array
+        old_table = self.storage
+        
+        self.storage = [None] * new_capacity
 
+        #sets capacity to new size
+        self.capacity = new_capacity
+        #resets the items count
+        self.items = 0
+        
+        for old_list in old_table:
+            if old_list is None:
+                continue
+            else:
+                cur = old_list.head
+                if cur:
+                    while cur:
+                        self.put(cur.key, cur.value)
+                        cur = cur.next
+            
+                
 
 
 if __name__ == "__main__":
     ht = HashTable(8)
-    
-    # print(ht)
     
     ht.put("line_1", "'Twas brillig, and the slithy toves")
     ht.put("line_2", "Did gyre and gimble in the wabe:")
@@ -277,19 +315,24 @@ if __name__ == "__main__":
     ht.put("line_10", "Long time the manxome foe he sought--")
     ht.put("line_11", "So rested he by the Tumtum tree")
     ht.put("line_12", "And stood awhile in thought.")
-
     print("")
-    
-    print(ht)
+    # print(f"items: {ht.items}\n\n")
+    # # print(f"load: {ht.get_load_factor()}\n\n")
+    # print(ht)
 
     # # #Test storing beyond capacity
-    # for i in range(1, 13):
-    #     print(f'{i} ', ht.get("line_%d" %i))
+    for i in range(1, 13):
+        print(f'{i} ', ht.get("line_%d" %i))
         
 
     ht.delete("line_12")
+    ht.delete("line_1")
+    ht.delete("line_8")
+    ht.delete("line_2")
     print("")
-    print(ht)
+    # # print(f"items: {ht.items}\n\n")
+    # print(f"load: {ht.get_load_factor()}\n\n")
+    # print(ht)
     
 
     # Test resizing
@@ -300,7 +343,7 @@ if __name__ == "__main__":
     # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
     # Test if data intact after resizing
-    # for i in range(1, 13):
-    #     print(ht.get(f"line_{i}"))
+    # for i in range(1, 12):
+    #     print(f'{i} ', ht.get("line_%d" %i))
 
     print("")
