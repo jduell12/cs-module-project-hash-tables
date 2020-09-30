@@ -13,12 +13,20 @@ def no_dups(s):
         #order by values
         dic = sorted(dic.items(), key=lambda t:t[1])
         
-        for index in range(len(dic)-1):
-            if index == len(dic)-1:
-                break
-            
-            if dic[index][1] == dic[index+1][1]:
-                dic.pop(index)
+        count = 1;
+        
+        while count > 0:
+            count = 0
+            for index in range(len(dic)-1):
+                if index == len(dic)-1:
+                    break
+                
+                if dic[index][1] == dic[index+1][1]:
+                    dic.pop(index+1)
+                    count += 1
+                    break
+        
+        
         
         #order by key
         dic = sorted(dic)
@@ -28,7 +36,6 @@ def no_dups(s):
         s = ""
         for k, v in dic:
             s += f'{v} '
-    
     return s.strip()
 
 
