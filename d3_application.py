@@ -114,8 +114,91 @@ def decode(s):
         r += decode_table[c]
     return r
 
-print("")
-print(encode('HELLOWORLD')) #should be DOGGEBEUGW
-print("")
-print(decode('DOGGEBEUGW')) #should be HELLOWORLD
-print("")
+# print("")
+# print(encode('HELLOWORLD')) #should be DOGGEBEUGW
+# print("")
+# print(decode('DOGGEBEUGW')) #should be HELLOWORLD
+# print("")
+
+#########################################################################
+#counting letters in a string
+
+def letter_count(s):
+    d = {}
+    
+    for c in s:
+        if c not in d:
+            d[c] = 1  
+        else: 
+            d[c] += 1
+    
+    # for c in s:
+    #     if c not in d:
+    #         d[c] = 0
+    #     d[c] += 1
+    
+    
+    return d
+
+# print(letter_count('abbbaaaaccaddadada'))
+#get ascii number for chars in list - capittal letters 
+alpha = [ chr(num) for num in range(65, 91)]
+
+# print(alpha)
+
+#########################################################################
+#how full could a hash table get before getting a collision?
+import hashlib
+import random 
+
+#returns big number for particular key
+def hash_function(key):
+    return int(hashlib.md5(str(key).encode()).hexdigest()[-8:], 16) & 0xffffffff
+
+def how_many_before_collision(buckets, loops):
+    for i in range(loops):
+        tries = 0
+        tried = set()
+        
+        while True:
+            random_key = random.random()
+            index = hash_function(random_key) % buckets
+            
+            if index not in tried:
+                tried.add(index)
+                tries += 1
+            else:
+                break
+        print(f'{buckets} buckets, {tries} hashes before collison, {tries/buckets * 100} % full')
+    
+# how_many_before_collision(32768, 10)
+
+#########################################################################
+#objective challenge in TK
+'''
+You are building a running podcast playlist generator.
+
+Long-distance runners love listening to podcasts on their runs. Their second podcast episode often gets cut off as they are ending their run. They want to be able to listen to two entire episodes during their long runs. You are building a feature that would choose two podcast episodes that will equal the exact length of their planned run.
+
+Write a function that takes an integer run_length (in minutes) and a list of integers podcast_episode_lengths (in minutes) and returns a boolean whether there are two numbers in podcast_episode_lengths whose sum equals run_length. Remember that the runners will listen to precisely two episodes, and they will not want to listen to the same episode twice.
+'''
+
+def pod(total, podcasts):
+    #could go through all of them
+    #O(n^2) - not good for large n
+    # for p0 in podcasts:
+    #     for p1 in podcasts:
+    #         if p0 + p1 == total:
+    #             return True
+    # return False
+    podcast_len = {}
+    for p in podcasts:
+        podcast_len[p] = True
+        
+    for p0 in podcasts:
+        #is there a podcast of total - p0 minutes?
+        if (total-p0) in podcast_len:
+            return True
+    return False
+    
+    
