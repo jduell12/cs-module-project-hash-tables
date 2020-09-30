@@ -1,45 +1,42 @@
+import collections
+
 def no_dups(s):
+    dic = collections.OrderedDict()
     
-    if len(s) < 1:
-        return s
-    
-    check = {}
-    
-    #split string via whitespace
-    words = s.split()
-    
-    #add the word with their index into the dict
-    for index in range(len(words)):
-        check[index] = words[index]
+    if len(s) > 1:
+        #split string using whitespace
+        words = s.split()
+        #create a dictionary using the index and each word
+        for index in range(len(words)):
+            dic[index] = words[index]
+            
+        #order by values
+        dic = sorted(dic.items(), key=lambda t:t[1])
         
-    #getting array of keys with values
-    checkList = list(check.items())
-    
-    #sort by values
-    checkList.sort(key=lambda t:t[1])
-    print("------------------")
-    print(checkList)
-    print("------------------")
-    
-    for checkIndex in range(len(check)):
-        if checkIndex+1 < len(check) and checkList[checkIndex][0] == checkList[checkIndex+1][0]:
-            checkList[checkIndex+1] = (checkIndex+1, '')
-    
-    #sort list by index to put words back in order
-    checkList.sort()
-    
-    return checkList
+        for index in range(len(dic)-1):
+            if index == len(dic)-1:
+                break
+            
+            if dic[index][1] == dic[index+1][1]:
+                dic.pop(index)
         
-    # word = " "
+        #order by key
+        dic = sorted(dic)
+        if len(dic) == 1:
+            return dic[0][1]
+        
+        s = ""
+        for k, v in dic:
+            s += f'{v} '
     
-    # return word.join(words).strip()
-    
+    return s.strip()
+
 
 
 
 if __name__ == "__main__":
-    # print(no_dups(""))
-    # print(no_dups("hello"))
-    # print(no_dups("hello hello"))
-    # print(no_dups("cats dogs fish cats dogs"))
+    print(no_dups(""))
+    print(no_dups("hello"))
+    print(no_dups("hello hello"))
+    print(no_dups("cats dogs fish cats dogs"))
     print(no_dups("spam spam spam eggs spam sausage spam spam and spam"))
