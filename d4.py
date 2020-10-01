@@ -70,21 +70,26 @@ cache = {}
 
 CACHE_TIMEOUT_SECS = 10
 
-while True:
-    url = input("Enter a URL: ")
-    
-    if url == '':
-        break
+def web_cache():
+    while True:
+        url = input("Enter a URL: ")
+        
+        if url == '':
+            break
 
-    cur_time = datetime.datetime.now().timestamp()
-    print(cur_time)
-    
-    if url not in cache or cur_time - cache[url].timestamp > CACHE_TIMEOUT_SECS:
-        resp = urllib.request.urlopen(url)
-        data = resp.read()
-        cache[url] = CacheEntry(data)
-        resp.close()
-        print("CACHE MISS")
-    else:
-        print ("CACHE HIT")
-    print(data[:75])
+        cur_time = datetime.datetime.now().timestamp()
+        print(cur_time)
+        
+        if url not in cache or cur_time - cache[url].timestamp > CACHE_TIMEOUT_SECS:
+            resp = urllib.request.urlopen(url)
+            data = resp.read()
+            cache[url] = CacheEntry(data)
+            resp.close()
+            print("CACHE MISS")
+        else:
+            print ("CACHE HIT")
+        print(data[:75])
+        
+# web_cache()
+
+#########################################################
