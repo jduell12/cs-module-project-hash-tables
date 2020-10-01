@@ -44,10 +44,15 @@ records = [
 
 department_index = {}
 
-for r in records:
-    if r[1] in department_index:
-        department_index[r[1]].append(r[0])
-    else:
-        department_index[r[1]] = [r[0]]
+def add_dept_index(name, dep):
+    if dep not in department_index:
+        department_index[dep] = []
+    
+    department_index[dep].append(name)
 
-print(department_index["Marketing"])
+for r in records:
+    add_dept_index(r[0], r[1])
+
+print(department_index["Engineering"])
+add_dept_index("Jess", "Engineering")
+print(department_index["Engineering"])
