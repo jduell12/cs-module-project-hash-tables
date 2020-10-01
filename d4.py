@@ -53,6 +53,38 @@ def add_dept_index(name, dep):
 for r in records:
     add_dept_index(r[0], r[1])
 
-print(department_index["Engineering"])
-add_dept_index("Jess", "Engineering")
-print(department_index["Engineering"])
+# print(department_index["Engineering"])
+# add_dept_index("Jess", "Engineering")
+# print(department_index["Engineering"])
+
+#########################################################
+import urllib.request
+import datetime 
+
+class CacheEntry:
+    def __init__(self, data):
+        self.data = data
+        self.timestamp = datetime.datetime.now().timestamp()
+
+cache = {}
+
+CACHE_TIMEOUT_SECS = 10
+
+while True:
+    url = input("Enter a URL: ")
+    
+    if url == '':
+        break
+
+    cur_time = datetime.datetime.now().timestamp()
+    print(cur_time)
+    
+    if url not in cache or cur_time - cache[url].timestamp > CACHE_TIMEOUT_SECS:
+        resp = urllib.request.urlopen(url)
+        data = resp.read()
+        cache[url] = CacheEntry(data)
+        resp.close()
+        print("CACHE MISS")
+    else:
+        print ("CACHE HIT")
+    print(data[:75])
