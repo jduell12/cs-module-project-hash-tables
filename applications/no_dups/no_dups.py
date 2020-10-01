@@ -25,9 +25,7 @@ def no_dups(s):
                     dic.pop(index+1)
                     count += 1
                     break
-        
-        
-        
+
         #order by key
         dic = sorted(dic)
         if len(dic) == 1:
