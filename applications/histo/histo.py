@@ -26,7 +26,26 @@ def histo(fileName):
             else: 
                 count[word] += 1
     
-    print(count)
-        
+    wordList = list(count.items())
+    wordList.sort(key=lambda t:t[1])
+    
+    count = len(wordList)-1
+    
+    while count > 0:
+        #same frequency need to order alphabetically
+        if wordList[count][1] == wordList[count-1][1]:
+            pass
+        else:
+            length = wordList[count][1]
+            s = ""
+            for i in range(length):
+                s += "#"
+            #sets space for formatting    
+            space = ""
+            for i in range(10-len(wordList[count][0])):
+                space += " "
+            
+            print(f"{wordList[count][0]} {space}  {s:>}")
+        count -= 1
     
 histo('robin.txt')
