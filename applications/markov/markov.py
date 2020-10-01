@@ -61,5 +61,8 @@ for sent in range(5):
     #adds end word on sentenance
     s += random.choice(end_words)
     
+    if ord(s[0]) == 34 and ord(s[len(s)-1]) != 34:
+        s += chr(34)
+    
     print(s)
     print("")
