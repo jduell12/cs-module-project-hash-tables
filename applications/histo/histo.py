@@ -1,3 +1,15 @@
+def formatString(word, length):
+    s = ""
+    for i in range(length):
+        s += "#"
+    #sets space for formatting    
+    space = ""
+    for i in range(25-len(word)-1):
+        space += " "
+    
+    return (f"{word} {space}  {s:>}\n")
+    
+
 def histo(fileName):
     count = {}
     #ignore " : ; , . - + = / \ | [ ] { } ( ) * ^ & via Ascii
@@ -26,26 +38,34 @@ def histo(fileName):
             else: 
                 count[word] += 1
     
-    wordList = list(count.items())
+    wordList = list(count.items())  
     wordList.sort(key=lambda t:t[1])
     
     count = len(wordList)-1
     
+    histo = ""
+    
     while count > 0:
         #same frequency need to order alphabetically
         if wordList[count][1] == wordList[count-1][1]:
-            pass
-        else:
+            sameFreq = []
             length = wordList[count][1]
-            s = ""
-            for i in range(length):
-                s += "#"
-            #sets space for formatting    
-            space = ""
-            for i in range(10-len(wordList[count][0])):
-                space += " "
+            #get list of words with same freq
+            while wordList[count][1] == wordList[count-1][1]:
+                sameFreq.append(wordList[count][0])
+                sameFreq.append(wordList[count-1][0])
+                count -= 2
             
-            print(f"{wordList[count][0]} {space}  {s:>}")
+            #sort list alphabetically
+            sameFreq.sort()
+            
+            #get formatted string for each word
+            for word in sameFreq:
+                histo += formatString(word, length)
+                
+        else:
+            histo += formatString(wordList[count][0], wordList[count][1])
         count -= 1
+    print(histo)
     
 histo('robin.txt')
