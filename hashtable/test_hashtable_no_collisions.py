@@ -16,6 +16,7 @@ class TestHashTable(unittest.TestCase):
         ht.put("key-0", "val-0")
         ht.put("key-1", "val-1")
         ht.put("key-2", "val-2")
+        
 
         return_value = ht.get("key-0")
         self.assertTrue(return_value == "val-0")
